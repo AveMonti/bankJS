@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app1">
+<head>
+    <meta charset="UTF-8">
+    <title>Page1</title>
+</head>
+<body>
+
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<script src="/js/jquery.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</head>
+
+<body ng-controller="Ctrl as ctrl">
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Main page</h1>
+    </div>
+
+    <div class="panel panel-default">
+
+        <div class="panel-heading">
+            Main page
+        </div>
+
+        <div class="panel-body">
+            <h1>Saldo</h1>
+
+            <br/>
+            <h3>
+                <span ng-bind="ctrl.konto.saldo"></span>
+            </h3>
+            <input type="number" ng-model="ctrl.kwota"/>
+            <button class="btn btn-primary" ng-click="ctrl.wplac()">Wplac</button>
+
+
+            <h5>
+                <span ng-bind="ctrl.komunikat"></span>
+            </h5>
+        </div>
+
+        <div class="panel-footer">
+            <a href="/html/index.html" class="btn btn-default btn-sm">Home</a> <a href="/html/page2.html" class="btn btn-default btn-sm">Page 2</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/js/angular.min.js"></script>
+<script src="/js/angular-route.min.js"></script>
+<script src="/js/app1.js"></script>
+</body>
+</html>
