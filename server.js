@@ -57,13 +57,9 @@ mongo.connect("mongodb://localhost:27017", function(err, conn) {
                     switch (req.method){
                         case 'GET':
                             rep.writeHead(200,'OK',{'Content-type':'application/json'});
-
-
                             accounts.findOne({ _id: ObjectId("5aae479024c63d156e2c6acf") }, function(err, konto) {
                                 rep.end(JSON.stringify(konto));
                             });
-
-
                             break;
                         case 'POST':
                             var data = '';
@@ -71,9 +67,16 @@ mongo.connect("mongodb://localhost:27017", function(err, conn) {
                                 data += part;
                             }).on('end', function () {
                                 var arg = JSON.parse(data);
-                                konto.saldo += arg.kwota;
-                                rep.writeHead(200, 'OK', {'Content-type': 'application/json'});
-                                rep.end(JSON.stringify(konto));
+                                console.log(arg);
+                                accounts.findOne({_id: ObjectId("5aae479024c63d156e2c6acf")}, function (err, konto) {
+                                    accounts.findOneAndUpdate({_id: ObjectId("5aae479024c63d156e2c6acf")}, {$set: {balance: konto.balance + arg.kwota}}, function (err, op) {
+                                        accounts.findOne({_id: ObjectId("5aae479024c63d156e2c6acf")}, function (err, updated_account) {
+                                            rep.writeHead(200, 'OK', {'Content-type': 'application/json'});
+                                            rep.end(JSON.stringify(updated_account));
+                                        });
+                                    });
+                                });
+
                             });
                             break;
                         default:
