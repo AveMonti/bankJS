@@ -15,11 +15,6 @@ mongo.connect("mongodb://localhost:27017", function(err, conn) {
     var db = conn.db("bank");
     var accounts = db.collection("accounts");
 
-
-
-
-
-
     function serveFile(rep, fileName, errorCode, message) {
 
         if(debugLog) console.log('Serving file ' + fileName + (message ? ' with message \'' + message + '\'': ''));
