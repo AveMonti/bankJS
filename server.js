@@ -14,7 +14,7 @@ mongo.connect("mongodb://localhost:27017", function(err, conn) {
     }
     var db = conn.db("bank");
     var accounts = db.collection("accounts");
-
+    var transactions = db.collection("transactions");
     function serveFile(rep, fileName, errorCode, message) {
 
         if(debugLog) console.log('Serving file ' + fileName + (message ? ' with message \'' + message + '\'': ''));
@@ -68,6 +68,13 @@ mongo.connect("mongodb://localhost:27017", function(err, conn) {
                                         accounts.findOne({_id: ObjectId("5aae479024c63d156e2c6acf")}, function (err, updated_account) {
                                             rep.writeHead(200, 'OK', {'Content-type': 'application/json'});
                                             rep.end(JSON.stringify(updated_account));
+
+                                            transactions.insertOne({data : new Date(), konto : ObjectId("5aae479024c63d156e2c6acf"), saldoPrzed: konto.balance  , kwota : arg.kwota , saldoPo: konto.balance + arg.kwota}, function(succ, err) {
+
+                                                    console.log("Succes " + succ);
+                                                    console.log("Error" + err);
+                                            });
+
                                         });
                                     });
                                 });
